@@ -5,34 +5,28 @@
     android:layout_height="match_parent"
     android:background="#FFC107"
     android:padding="15dp"
-    tools:context=".TicketsActivity">
+    tools:context=".name_user">
 
     <TextView
         android:id="@+id/Heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tickets"
+        android:text="Names"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="40sp" />
 
-    <TextView
-        android:id="@+id/AD_Select_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Heading"
-        android:layout_marginTop="10dp"
-        android:text="Select Date"
-        android:textAlignment="center"
-        android:textSize="20sp" />
 
     <ListView
-        android:id="@+id/AD_listView"
+        android:id="@+id/NM_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/AD_Select_date"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/Heading"
+        android:layout_marginTop="10dp"
         android:divider="@color/purple_500"
         android:dividerHeight="2dp" />
 
 </RelativeLayout>
+
+
+

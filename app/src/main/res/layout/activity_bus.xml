@@ -16,7 +16,7 @@
             android:id="@+id/spinnerBusType"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/edit_box"
             android:paddingStart="20dp"
             android:paddingEnd="0dp"
@@ -152,44 +152,12 @@
 
         </RelativeLayout>
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/LocationIDS"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
-            android:textColor="#03A9F4"
-            android:textColorHint="#03A9F4">
-
-            <RadioButton
-                android:id="@+id/Runs_everyday"
-                android:layout_width="170dp"
-                android:layout_height="35dp"
-                android:checked="true"
-                android:onClick="checkButton"
-                android:text="@string/runs_everyday"
-                android:textColor="#03A9F4"
-                android:textColorHint="#03A9F4"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/Runs_someday"
-                android:layout_width="170dp"
-                android:layout_height="35dp"
-                android:onClick="checkButton"
-                android:text="@string/specific_days"
-                android:textColor="#03A9F4"
-                android:textColorHint="#03A9F4"
-                android:textSize="20sp" />
-
-        </RadioGroup>
 
         <Button
             android:id="@+id/btnAddBus"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/radioGroup"
+            android:layout_below="@+id/LocationIDS"
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:background="@drawable/button"

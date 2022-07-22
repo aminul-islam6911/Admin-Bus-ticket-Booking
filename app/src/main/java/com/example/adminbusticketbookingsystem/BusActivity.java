@@ -37,12 +37,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class BusActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener, IFirebaseLoadDone, DatePickerDialog.OnDateSetListener{
+public class BusActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener, IFirebaseLoadDone{
     private Button btnStartingTime, btnArrivalTime, btnAddBus, btnRefresh;
     private EditText edtBusNo, edtTicketPrice, edtNoOfSeat;
     private TextView txtName;
     private String stName, stSpecificDay, stBusType;
-    private String stStartingTime, stArrivalTime, stDate;
+    private String stStartingTime, stArrivalTime;
     private DatabaseReference admin_name, locationRef, StoringData;
     private ProgressDialog Initilizer_PD, sendingData;
     private boolean ChooseStarttime = true;
@@ -54,8 +54,6 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
     IFirebaseLoadDone iFirebaseLoadDone;
     String stStartingLoc, stDestinationLoc;
     List<IDs> iDs;
-    RadioGroup radioGroup;
-    RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,7 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
                 edtBusNo.setText("");
                 edtNoOfSeat.setText("");
                 edtTicketPrice.setText("");
-                btnStartingTime.setText("Starting Time");
+                btnStartingTime.setText("Start Time");
                 btnArrivalTime.setText("Arrival Time");
             }
         });
@@ -98,9 +96,6 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
 
         //Spinner
         spinnerBusType = findViewById(R.id.spinnerBusType);
-
-        stDate = "Runs Everyday";
-        radioGroup = findViewById(R.id.radioGroup);
 
         sendingData = new ProgressDialog(this);
         sendingData.setTitle("Saving data to database");
@@ -197,8 +192,7 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
                             && !stDestinationLoc.isEmpty() && !stStartingTime.isEmpty()
                             && !stArrivalTime.isEmpty() && !dbNoOfSeats.isEmpty() && !Ticket_price.isEmpty()) {
                         sendingData.show();
-                        SendBusData(stBusType, dbBusNo, stStartingLoc, stDestinationLoc, stStartingTime, stArrivalTime, stDate, dbNoOfSeats, Ticket_price);
-                        storeBusData(stBusType, dbBusNo, stStartingLoc, stDestinationLoc, stStartingTime, stArrivalTime, stDate, dbNoOfSeats, Ticket_price);
+                        SendBusData(stBusType, dbBusNo, stStartingLoc, stDestinationLoc, stStartingTime, stArrivalTime, dbNoOfSeats, Ticket_price);
                     } else {
                         Toast.makeText(BusActivity.this, "Please fill each box", Toast.LENGTH_SHORT).show();
                     }
@@ -211,16 +205,15 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
 
     private void SendBusData(String BusType, String BusNo,
                              String StartingLoc, String DestinationLoc,
-                             String StartingTime, String ArrivalTime, String Date, String NoOfSeats, String Price) {
-        String DateId = (stDate + " " + stStartingLoc + " " + stDestinationLoc);
+                             String StartingTime, String ArrivalTime, String NoOfSeats, String Price) {
+        String DateId = (stStartingLoc + " " + stDestinationLoc);
         StoringData = FirebaseDatabase.getInstance().getReference().
-                child("Schedule").child(DateId).child(BusNo);
+                child("Buses").child(DateId).child(BusNo);
         HashMap<String, String> loc = new HashMap<>();
         loc.put("Start", stStartingLoc);
         loc.put("Destination", stDestinationLoc);
         loc.put("StartingTime", stStartingTime);
         loc.put("ArrivalTime", stArrivalTime);
-        loc.put("Date", stDate);
         loc.put("BusType", stBusType.toLowerCase());//Converting text to lower case
         loc.put("BusNo", BusNo);
         loc.put("NumberOfSeat", NoOfSeats);
@@ -237,56 +230,6 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
                 }
             }
         });
-    }
-
-    private void storeBusData(String BusType, String BusNo,
-                             String StartingLoc, String DestinationLoc,
-                             String StartingTime, String ArrivalTime, String Date, String NoOfSeats, String Price) {
-        StoringData = FirebaseDatabase.getInstance().getReference().
-                child("Buses").child(BusNo);
-        HashMap<String, String> loc = new HashMap<>();
-        loc.put("Start", stStartingLoc);
-        loc.put("Destination", stDestinationLoc);
-        loc.put("StartingTime", stStartingTime);
-        loc.put("ArrivalTime", stArrivalTime);
-        loc.put("Date", stDate);
-        loc.put("BusType", stBusType.toLowerCase());//Converting text to lower case
-        loc.put("BusNo", BusNo);
-        loc.put("NumberOfSeat", NoOfSeats);
-        loc.put("TicketPrice", Price);
-        StoringData.setValue(loc).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    sendingData.dismiss();
-                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                } else {
-                    sendingData.dismiss();
-                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    public void checkButton(View v) {
-        int radioId = radioGroup.getCheckedRadioButtonId();
-        radioButton = findViewById(radioId);
-        stSpecificDay = radioButton.getText().toString();
-        if (stSpecificDay.equals("Specific Days")) {
-            Confirmdays();
-        }
-        stDate = stSpecificDay;
-    }
-
-    private void Confirmdays() {
-        if (stSpecificDay.equals("Specific Days")) {
-            Calendar c = Calendar.getInstance();
-            day = c.get(Calendar.DAY_OF_MONTH);
-            month = c.get(Calendar.MONTH);
-            year = c.get(Calendar.YEAR);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(BusActivity.this, BusActivity.this, year, month, day);
-            datePickerDialog.show();
-        }
     }
 
     private void SelectTime() {
@@ -340,13 +283,5 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onFirebaseLoadFailed(String Message) {
 
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        yearFinal = year;
-        monthFinal = month + 1;
-        dayFinal = dayOfMonth;
-        stDate = ("Date:" + dayFinal + "_" + monthFinal + "_" + yearFinal);
     }
 }
