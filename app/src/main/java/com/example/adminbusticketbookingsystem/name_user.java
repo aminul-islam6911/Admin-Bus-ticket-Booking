@@ -31,7 +31,6 @@ public class name_user extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         String intent_ref = getIntent().getStringExtra("database_ref");
-        Toast.makeText(name_user.this, intent_ref ,Toast.LENGTH_LONG).show();
 
         DatabaseReference Ticket_Check_User_Admin = FirebaseDatabase.getInstance().
                 getReference().child("Tickets").child("Ticket_Check_User_Admin").child(intent_ref);

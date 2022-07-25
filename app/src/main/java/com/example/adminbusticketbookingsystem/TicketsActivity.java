@@ -59,7 +59,6 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String database_ref = arrayList.get(i);
-                Toast.makeText(TicketsActivity.this, database_ref, Toast.LENGTH_LONG).show();
                 Intent in = new Intent(TicketsActivity.this, name_user.class);
                 in.putExtra("database_ref", database_ref);
                 startActivity(in);
@@ -84,8 +83,6 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
         if (dbDate.equals("nothing")) {
             Toast.makeText(TicketsActivity.this, dbDate, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(TicketsActivity.this, dbDate, Toast.LENGTH_SHORT).show();
-
             DatabaseReference TicketID = FirebaseDatabase.getInstance().getReference().
                     child("Tickets").child("TicketID").child(dbDate);
             TicketID.addChildEventListener(new ChildEventListener() {
