@@ -185,6 +185,22 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/btnBusUpdate"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/btnRefresh"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:text="@string/update"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
     </RelativeLayout>
 
 </ScrollView>

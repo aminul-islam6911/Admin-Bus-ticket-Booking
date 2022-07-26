@@ -35,7 +35,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="22dp"
         android:clickable="true"
         app:srcCompat="@drawable/add"
         tools:ignore="ContentDescription" />

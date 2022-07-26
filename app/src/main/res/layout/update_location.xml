@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/edtAdLocation"
+        android:id="@+id/edtUpLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Location"
@@ -21,14 +21,14 @@
         android:layout_centerHorizontal="true">
 
         <Button
-            android:id="@+id/btnAddLocation"
+            android:id="@+id/btnUpdateLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/button"
             android:padding="10dp"
-            android:text="Add"
+            android:text="Update"
             android:textAllCaps="false"
             android:textColor="@color/But_bg"
             android:textSize="20sp" />
@@ -40,7 +40,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/btnAddLocation"
+            android:layout_toEndOf="@id/btnUpdateLocation"
             android:background="@drawable/button"
             android:padding="10dp"
             android:text="Cancel"
@@ -48,4 +48,6 @@
             android:textColor="#FF3D00"
             android:textSize="20sp" />
     </RelativeLayout>
+
+
 </RelativeLayout>
