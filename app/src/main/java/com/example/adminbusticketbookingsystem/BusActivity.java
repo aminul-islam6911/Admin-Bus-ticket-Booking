@@ -1,9 +1,5 @@
 package com.example.adminbusticketbookingsystem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -12,14 +8,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminbusticketbookingsystem.Interface.IFirebaseLoadDone;
 import com.example.adminbusticketbookingsystem.Model.IDs;
@@ -37,12 +33,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class BusActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener, IFirebaseLoadDone{
+public class BusActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener, IFirebaseLoadDone {
     private Button btnStartingTime, btnArrivalTime, btnAddBus, btnRefresh;
     private EditText edtBusNo, edtTicketPrice, edtNoOfSeat;
     private TextView txtName;
     private String stName, stSpecificDay, stBusType;
-    private String stStartingTime, stArrivalTime;
+    private String stStartingTime, stArrivalTime, route;
     private DatabaseReference admin_name, locationRef, StoringData;
     private ProgressDialog Initilizer_PD, sendingData;
     private boolean ChooseStarttime = true;
@@ -188,21 +184,55 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onClick(View v) {
                 busAc_NonAc();
-                String dbBusNo = edtBusNo.getText().toString();
-                String dbNoOfSeats = edtNoOfSeat.getText().toString();
+                String stBusNo = edtBusNo.getText().toString();
+                String stNoOfSeats = edtNoOfSeat.getText().toString();
                 String Ticket_price = edtTicketPrice.getText().toString();
 
                 if (!stStartingLoc.equals(stDestinationLoc)) {
-                    if (!stBusType.isEmpty() && !dbBusNo.isEmpty() && !stStartingLoc.isEmpty()
+                    if (!stBusType.isEmpty() && !stBusNo.isEmpty() && !stStartingLoc.isEmpty()
                             && !stDestinationLoc.isEmpty() && !stStartingTime.isEmpty()
-                            && !stArrivalTime.isEmpty() && !dbNoOfSeats.isEmpty() && !Ticket_price.isEmpty()) {
+                            && !stArrivalTime.isEmpty() && !stNoOfSeats.isEmpty() && !Ticket_price.isEmpty()) {
                         sendingData.show();
-                        SendBusData(stBusType, dbBusNo, stStartingLoc, stDestinationLoc, stStartingTime, stArrivalTime, dbNoOfSeats, Ticket_price);
+                        SendBusData(stBusType, stBusNo, stStartingLoc, stDestinationLoc, stStartingTime, stArrivalTime, stNoOfSeats, Ticket_price);
+                        storeBusRoute(stStartingLoc, stDestinationLoc);
+                        //storeBusNo(stBusNo);
                     } else {
                         Toast.makeText(BusActivity.this, "Please fill each box", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(BusActivity.this, "Location is repeated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+//    private void  storeBusNo(String BusNo) {
+//        DatabaseReference dbBusNo = FirebaseDatabase.getInstance().getReference().child("Bus No");
+//        HashMap<String, Object> busNo = new HashMap<>();
+//        busNo.put(route, BusNo);
+//        dbBusNo.child(BusNo).setValue(busNo).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()) {
+//                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
+
+    private void storeBusRoute(String StartingLoc, String DestinationLoc) {
+        route = (stStartingLoc + " " + stDestinationLoc);
+        DatabaseReference dbbusroute = FirebaseDatabase.getInstance().getReference().child("Bus Route");
+        HashMap<String, Object> busroute = new HashMap<>();
+        busroute.put("Road", route);
+        dbbusroute.child(route).setValue(busroute).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -213,7 +243,7 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
                              String StartingTime, String ArrivalTime, String NoOfSeats, String Price) {
         String DateId = (stStartingLoc + " " + stDestinationLoc);
         StoringData = FirebaseDatabase.getInstance().getReference().
-                child("Buses").child(DateId).child(BusNo);
+                child("Schedule").child(DateId).child(BusNo);
         HashMap<String, String> loc = new HashMap<>();
         loc.put("Start", stStartingLoc);
         loc.put("Destination", stDestinationLoc);

@@ -14,6 +14,12 @@
         android:theme="@style/Theme.AdminBusTicketBookingSystem"
         tools:targetApi="31">
         <activity
+            android:name=".BusNoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BusDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".name_user"
             android:exported="false" />
         <activity

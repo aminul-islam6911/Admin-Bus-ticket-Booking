@@ -42,6 +42,17 @@
             android:textSize="30sp" />
 
         <Button
+            android:id="@+id/btnBusDetails"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button"
+            android:padding="10dp"
+            android:text="Bus Details"
+            android:textAllCaps="false"
+            android:textSize="30sp" />
+
+        <Button
             android:id="@+id/btnTickets"
             android:layout_width="200dp"
             android:layout_height="match_parent"
