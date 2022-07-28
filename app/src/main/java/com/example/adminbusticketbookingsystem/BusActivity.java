@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BusActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener, IFirebaseLoadDone{
-    private Button btnStartingTime, btnArrivalTime, btnAddBus, btnRefresh, btnBusUpdate;
+    private Button btnStartingTime, btnArrivalTime, btnAddBus, btnRefresh;
     private EditText edtBusNo, edtTicketPrice, edtNoOfSeat;
     private TextView txtName;
     private String stName, stSpecificDay, stBusType;
@@ -89,7 +89,6 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
         btnArrivalTime = findViewById(R.id.btnArrivalTime);
         btnAddBus = findViewById(R.id.btnAddBus);
         btnRefresh = (Button) findViewById(R.id.btnRefresh);
-        btnBusUpdate = (Button) findViewById(R.id.btnBusUpdate);
 
         //Edittext
         edtBusNo = findViewById(R.id.edtBusNo);
