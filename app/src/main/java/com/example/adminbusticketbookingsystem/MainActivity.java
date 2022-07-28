@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnLocation, btnBus, btnTickets, btnBusDetails;
+    Button btnLocation, btnBus, btnTickets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
         btnLocation = findViewById(R.id.btnLocation);
         btnBus = findViewById(R.id.btnBus);
         btnTickets = findViewById(R.id.btnTickets);
-        btnBusDetails = findViewById(R.id.btnBusDetails);
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         btnBus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BusActivity.class);
+                Intent intent = new Intent(MainActivity.this, BusDetailsActivity.class);
                 startActivity(intent);
             }
         });
@@ -40,14 +39,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TicketsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnBusDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BusDetailsActivity.class);
                 startActivity(intent);
             }
         });
