@@ -195,7 +195,7 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
                         sendingData.show();
                         SendBusData(stBusType, stBusNo, stStartingLoc, stDestinationLoc, stStartingTime, stArrivalTime, stNoOfSeats, Ticket_price);
                         storeBusRoute(stStartingLoc, stDestinationLoc);
-                        //storeBusNo(stBusNo);
+                        storeBusNo(stBusNo);
                     } else {
                         Toast.makeText(BusActivity.this, "Please fill each box", Toast.LENGTH_SHORT).show();
                     }
@@ -205,25 +205,25 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
             }
         });
     }
-//    private void  storeBusNo(String BusNo) {
-//        DatabaseReference dbBusNo = FirebaseDatabase.getInstance().getReference().child("Bus No");
-//        HashMap<String, Object> busNo = new HashMap<>();
-//        busNo.put(route, BusNo);
-//        dbBusNo.child(BusNo).setValue(busNo).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//    }
+    private void  storeBusNo(String BusNo) {
+        DatabaseReference dbBusNo = FirebaseDatabase.getInstance().getReference().child("Bus Details").child("Bus No");
+        HashMap<String, Object> busNo = new HashMap<>();
+        busNo.put("BusNo", BusNo);
+        dbBusNo.child(route).child(BusNo).setValue(busNo).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     private void storeBusRoute(String StartingLoc, String DestinationLoc) {
         route = (stStartingLoc + " " + stDestinationLoc);
-        DatabaseReference dbbusroute = FirebaseDatabase.getInstance().getReference().child("Bus Route");
+        DatabaseReference dbbusroute = FirebaseDatabase.getInstance().getReference().child("Bus Details").child("Bus Route");
         HashMap<String, Object> busroute = new HashMap<>();
         busroute.put("Road", route);
         dbbusroute.child(route).setValue(busroute).addOnCompleteListener(new OnCompleteListener<Void>() {

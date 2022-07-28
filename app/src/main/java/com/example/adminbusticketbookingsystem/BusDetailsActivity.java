@@ -29,11 +29,22 @@ public class BusDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bus_details);
         listView = findViewById(R.id.lv_busLoc);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String road_ref = arrayList.get(i);
+                Intent in = new Intent(BusDetailsActivity.this, BusNoActivity.class);
+                in.putExtra("road_ref", road_ref);
+                startActivity(in);
+            }
+        });
+
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
 
-        DatabaseReference dbBusRoute = FirebaseDatabase.getInstance().getReference().child("Bus Route");
+        DatabaseReference dbBusRoute = FirebaseDatabase.getInstance().getReference().child("Bus Details").child("Bus Route");
         dbBusRoute.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -60,17 +71,6 @@ public class BusDetailsActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                String database_ref = arrayList.get(i);
-                Intent in = new Intent(BusDetailsActivity.this, BusNoActivity.class);
-                in.putExtra("database_ref", database_ref);
-                startActivity(in);
             }
         });
     }
