@@ -58,9 +58,9 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String database_ref = arrayList.get(i);
-                Intent in = new Intent(TicketsActivity.this, name_user.class);
-                in.putExtra("database_ref", database_ref);
+                String date_ref = arrayList.get(i);
+                Intent in = new Intent(TicketsActivity.this, Ticket_time.class);
+                in.putExtra("date_ref", date_ref);
                 startActivity(in);
             }
         });

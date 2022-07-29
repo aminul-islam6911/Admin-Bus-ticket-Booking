@@ -19,21 +19,21 @@ import java.util.ArrayList;
 
 public class name_user extends AppCompatActivity {
     ArrayList<String> arrayList = new ArrayList<>();
-    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name_user);
-        listView = findViewById(R.id.NM_listView);
+        ListView listView = findViewById(R.id.NM_listView);
 
         final ArrayAdapter<String> adapter =new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
         listView.setAdapter(adapter);
 
-        String intent_ref = getIntent().getStringExtra("database_ref");
+        String date_ref = getIntent().getStringExtra("date_ref");
+        String time_ref = getIntent().getStringExtra("time_ref");
 
         DatabaseReference Ticket_Check_User_Admin = FirebaseDatabase.getInstance().
-                getReference().child("Tickets").child("Ticket_Check_User_Admin").child(intent_ref);
+                getReference().child("Tickets").child("Ticket_Check_User_Admin").child(date_ref).child(time_ref);
 
         Ticket_Check_User_Admin.addChildEventListener(new ChildEventListener() {
             @Override
