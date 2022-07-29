@@ -1,5 +1,6 @@
 package com.example.adminbusticketbookingsystem;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,10 +10,11 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,26 +22,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Ticket_time extends AppCompatActivity {
+    ListView listView;
+    DatabaseReference Ticket_time;
     ArrayList<String> Tickets_time = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_time);
-        ListView listView = findViewById(R.id.TCT_listView);
+        listView = findViewById(R.id.TCT_listView);
+
+        String date_ref = getIntent().getStringExtra("date_ref");
+
+        Ticket_time = FirebaseDatabase.getInstance().getReference().child("Tickets").child("Admin_Time").child(date_ref);
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Tickets_time);
         listView.setAdapter(adapter);
 
-//        FirebaseUser mauth = FirebaseAuth.getInstance().getCurrentUser();
-//        String User = mauth.getUid();
-
-        String date_ref = getIntent().getStringExtra("date_ref");
-
-
-        DatabaseReference Ticket_time = FirebaseDatabase.getInstance().getReference().child("Tickets").child("Admin_Time").child(date_ref);
         Ticket_time.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
