@@ -84,7 +84,7 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
             Toast.makeText(TicketsActivity.this, dbDate, Toast.LENGTH_SHORT).show();
         } else {
             DatabaseReference TicketID = FirebaseDatabase.getInstance().getReference().
-                    child("Tickets").child("TicketID").child(dbDate);
+                    child("Tickets").child("Admin_HashCode").child(dbDate);
             TicketID.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {

@@ -33,7 +33,7 @@ public class name_user extends AppCompatActivity {
         String time_ref = getIntent().getStringExtra("time_ref");
 
         DatabaseReference Ticket_Check_User_Admin = FirebaseDatabase.getInstance().
-                getReference().child("Tickets").child("Ticket_Check_User_Admin").child(date_ref).child(time_ref);
+                getReference().child("Tickets").child("Admin_Ticket_Search").child(date_ref).child(time_ref);
 
         Ticket_Check_User_Admin.addChildEventListener(new ChildEventListener() {
             @Override
