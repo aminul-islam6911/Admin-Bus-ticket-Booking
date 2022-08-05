@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.adminbusticketbookingsystem.Model.IDs;
+import com.example.adminbusticketbookingsystem.Model.LocationModel;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,9 +42,9 @@ public class LocationActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvLocation);
 
         Query query = FirebaseDatabase.getInstance().getReference().child("Locations");
-        FirebaseListOptions<IDs> options = new FirebaseListOptions.Builder<IDs>()
+        FirebaseListOptions<LocationModel> options = new FirebaseListOptions.Builder<LocationModel>()
                 .setLayout(R.layout.list_view_loc)
-                .setQuery(query, IDs.class)
+                .setQuery(query, LocationModel.class)
                 .build();
 
         firebaseListAdapter = new FirebaseListAdapter(options) {
@@ -53,7 +52,7 @@ public class LocationActivity extends AppCompatActivity {
             protected void populateView(View v, Object model, final int position) {
                 TextView textView = v.findViewById(R.id.txtLoc);
 
-                IDs place = (IDs) model;
+                LocationModel place = (LocationModel) model;
                 textView.setText(place.getPlace());
 
                 v.findViewById(R.id.btnUpdate).setOnClickListener(new View.OnClickListener() {

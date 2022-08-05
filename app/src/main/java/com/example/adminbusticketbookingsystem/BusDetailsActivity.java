@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.adminbusticketbookingsystem.Model.BusRouteModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +36,7 @@ public class BusDetailsActivity extends AppCompatActivity {
         fabAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BusDetailsActivity.this, BusActivity.class);
+                Intent intent = new Intent(BusDetailsActivity.this, BusAddActivity.class);
                 startActivity(intent);
             }
         });
@@ -45,7 +46,7 @@ public class BusDetailsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String road_ref = arrayList.get(i);
-                Intent in = new Intent(BusDetailsActivity.this, BusNoActivity.class);
+                Intent in = new Intent(BusDetailsActivity.this, BusesActivity.class);
                 in.putExtra("road_ref", road_ref);
                 startActivity(in);
             }

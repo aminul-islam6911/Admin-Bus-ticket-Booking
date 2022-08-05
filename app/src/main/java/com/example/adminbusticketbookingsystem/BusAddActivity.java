@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminbusticketbookingsystem.Interface.IFirebaseLoadDone;
-import com.example.adminbusticketbookingsystem.Model.IDs;
+import com.example.adminbusticketbookingsystem.Model.LocationModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +33,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class BusActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener, IFirebaseLoadDone {
+public class BusAddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener, IFirebaseLoadDone {
     private Button btnStartingTime, btnArrivalTime, btnAddBus, btnRefresh;
     private EditText edtBusNo, edtTicketPrice, edtNoOfSeat;
     private TextView txtName;
@@ -49,12 +49,12 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
 
     IFirebaseLoadDone iFirebaseLoadDone;
     String stStartingLoc, stDestinationLoc;
-    List<IDs> iDs;
+    List<LocationModel> iDs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus);
+        setContentView(R.layout.activity_busadd);
         Initialize();
         busAc_NonAc();
         BusStartingTime();
@@ -137,9 +137,9 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
         locationRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<IDs> iDs = new ArrayList<>();
+                List<LocationModel> iDs = new ArrayList<>();
                 for (DataSnapshot idSnapShot : dataSnapshot.getChildren()) {
-                    iDs.add(idSnapShot.getValue(IDs.class));
+                    iDs.add(idSnapShot.getValue(LocationModel.class));
                 }
                 iFirebaseLoadDone.onFirebaseLoadSuccess(iDs);
             }
@@ -155,7 +155,7 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
         spStartingLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                IDs iD = iDs.get(position);
+                LocationModel iD = iDs.get(position);
                 stStartingLoc = iD.getPlace();
             }
 
@@ -168,7 +168,7 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
         spDestinationLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                IDs iD = iDs.get(position);
+                LocationModel iD = iDs.get(position);
                 stDestinationLoc = iD.getPlace();
             }
 
@@ -197,10 +197,10 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
                         storeBusRoute(stStartingLoc, stDestinationLoc);
                         storeBusNo(stBusNo);
                     } else {
-                        Toast.makeText(BusActivity.this, "Please fill each box", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BusAddActivity.this, "Please fill each box", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(BusActivity.this, "Location is repeated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusAddActivity.this, "Location is repeated", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -213,9 +213,9 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusAddActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusAddActivity.this, "Try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -230,9 +230,9 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusAddActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusAddActivity.this, "Try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -258,10 +258,10 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     sendingData.dismiss();
-                    Toast.makeText(BusActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusAddActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 } else {
                     sendingData.dismiss();
-                    Toast.makeText(BusActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusAddActivity.this, "Try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -271,9 +271,9 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
         Calendar c = Calendar.getInstance();
         hour = c.get(Calendar.HOUR_OF_DAY);
         minute = c.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(BusActivity.this,
-                BusActivity.this, hour, minute,
-                DateFormat.is24HourFormat(BusActivity.this));
+        TimePickerDialog timePickerDialog = new TimePickerDialog(BusAddActivity.this,
+                BusAddActivity.this, hour, minute,
+                DateFormat.is24HourFormat(BusAddActivity.this));
         timePickerDialog.show();
     }
 
@@ -294,7 +294,7 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         stBusType = parent.getItemAtPosition(position).toString();
-        Toast.makeText(BusActivity.this, stBusType, Toast.LENGTH_SHORT);
+        Toast.makeText(BusAddActivity.this, stBusType, Toast.LENGTH_SHORT);
     }
 
     @Override
@@ -303,10 +303,10 @@ public class BusActivity extends AppCompatActivity implements AdapterView.OnItem
     }
 
     @Override
-    public void onFirebaseLoadSuccess(List<IDs> LocationList) {
+    public void onFirebaseLoadSuccess(List<LocationModel> LocationList) {
         iDs = LocationList;
         List<String> id_list = new ArrayList<>();
-        for (IDs id : LocationList) {
+        for (LocationModel id : LocationList) {
             id_list.add(id.getPlace());
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_list_item_1, id_list);

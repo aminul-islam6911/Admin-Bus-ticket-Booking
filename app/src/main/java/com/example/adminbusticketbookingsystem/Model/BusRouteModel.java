@@ -1,4 +1,4 @@
-package com.example.adminbusticketbookingsystem;
+package com.example.adminbusticketbookingsystem.Model;
 
 import androidx.annotation.NonNull;
 

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btnTickets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TicketsActivity.class);
+                Intent intent = new Intent(MainActivity.this, TicketTimeActivity.class);
                 startActivity(intent);
             }
         });

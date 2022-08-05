@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TicketsActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class TicketTimeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private ListView listView;
     ArrayList<String> arrayList = new ArrayList<>();
     private TextView txtDate;
@@ -32,7 +32,7 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tickets);
+        setContentView(R.layout.activity_tickettime);
 
         listView = findViewById(R.id.AD_listView);
         txtDate = findViewById(R.id.AD_Select_date);
@@ -48,8 +48,8 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
                 month = c.get(Calendar.MONTH);
                 year = c.get(Calendar.YEAR);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(TicketsActivity.this,
-                        TicketsActivity.this, year, month, day);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(TicketTimeActivity.this,
+                        TicketTimeActivity.this, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -59,7 +59,7 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String date_ref = arrayList.get(i);
-                Intent in = new Intent(TicketsActivity.this, Ticket_time.class);
+                Intent in = new Intent(TicketTimeActivity.this, TicketActivity.class);
                 in.putExtra("date_ref", date_ref);
                 startActivity(in);
             }
@@ -81,7 +81,7 @@ public class TicketsActivity extends AppCompatActivity implements DatePickerDial
         listView.setAdapter(myArrayAdapter);
 
         if (dbDate.equals("nothing")) {
-            Toast.makeText(TicketsActivity.this, dbDate, Toast.LENGTH_SHORT).show();
+            Toast.makeText(TicketTimeActivity.this, dbDate, Toast.LENGTH_SHORT).show();
         } else {
             DatabaseReference TicketID = FirebaseDatabase.getInstance().getReference().
                     child("Tickets").child("Admin_HashCode").child(dbDate);

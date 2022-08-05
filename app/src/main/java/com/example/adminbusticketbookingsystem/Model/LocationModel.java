@@ -2,13 +2,13 @@ package com.example.adminbusticketbookingsystem.Model;
 
 import androidx.annotation.NonNull;
 
-public class IDs {
+public class LocationModel {
     private String Place;
 
-    public IDs() {
+    public LocationModel() {
     }
 
-    public IDs(String place) {
+    public LocationModel(String place) {
         Place = place;
     }
 
