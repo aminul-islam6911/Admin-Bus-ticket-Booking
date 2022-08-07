@@ -115,4 +115,9 @@ public class TicketTimeActivity extends AppCompatActivity implements DatePickerD
             });
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(TicketTimeActivity.this, MainActivity.class));
+    }
 }

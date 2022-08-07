@@ -171,7 +171,7 @@ public class TicketActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(TicketActivity.this, MainActivity.class);
+        Intent intent = new Intent(TicketActivity.this, TicketTimeActivity.class);
         startActivity(intent);
         finish();
     }

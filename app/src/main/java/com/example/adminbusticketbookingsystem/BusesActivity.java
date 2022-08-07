@@ -1,6 +1,7 @@
 package com.example.adminbusticketbookingsystem;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,5 +130,10 @@ public class BusesActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         firebaseRecyclerAdapter.stopListening();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(BusesActivity.this, BusDetailsActivity.class));
     }
 }

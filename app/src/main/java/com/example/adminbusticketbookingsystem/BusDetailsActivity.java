@@ -86,4 +86,10 @@ public class BusDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(BusDetailsActivity.this, MainActivity.class));
+        finish();
+    }
 }

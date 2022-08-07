@@ -2,6 +2,7 @@ package com.example.adminbusticketbookingsystem;
 
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -61,22 +62,21 @@ public class BusAddActivity extends AppCompatActivity implements AdapterView.OnI
         BusArrivalTime();
         FirebaseDataRetrieve();
         SpinnerGetText();
-        Update();
         Confirming();
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edtBusNo.setText("");
-                edtNoOfSeat.setText("");
-                edtTicketPrice.setText("");
-                btnStartingTime.setText("Start Time");
-                btnArrivalTime.setText("Arrival Time");
+                clear();
             }
         });
     }
 
-    private void Update() {
-
+    private void clear() {
+        edtBusNo.setText("");
+        edtNoOfSeat.setText("");
+        edtTicketPrice.setText("");
+        btnStartingTime.setText("Start Time");
+        btnArrivalTime.setText("Arrival Time");
     }
 
     private void Initialize() {
@@ -195,27 +195,12 @@ public class BusAddActivity extends AppCompatActivity implements AdapterView.OnI
                         sendingData.show();
                         SendBusData(stBusType, stBusNo, stStartingLoc, stDestinationLoc, stStartingTime, stArrivalTime, stNoOfSeats, Ticket_price);
                         storeBusRoute(stStartingLoc, stDestinationLoc);
-                        storeBusNo(stBusNo);
+                        clear();
                     } else {
                         Toast.makeText(BusAddActivity.this, "Please fill each box", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(BusAddActivity.this, "Location is repeated", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-    private void  storeBusNo(String BusNo) {
-        DatabaseReference dbBusNo = FirebaseDatabase.getInstance().getReference().child("Bus Details").child("Bus No");
-        HashMap<String, Object> busNo = new HashMap<>();
-        busNo.put("BusNo", BusNo);
-        dbBusNo.child(route).child(BusNo).setValue(busNo).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(BusAddActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(BusAddActivity.this, "Try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -318,5 +303,11 @@ public class BusAddActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onFirebaseLoadFailed(String Message) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(BusAddActivity.this, BusDetailsActivity.class));
+        finish();
     }
 }
